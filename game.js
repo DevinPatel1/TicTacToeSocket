@@ -1,6 +1,10 @@
 var player
 var otherPlayer
 
+function setPlayerSymbols() {
+
+}
+
 function placeInSpace(space) {
     document.getElementById(space).innerHTML = player;
 }
@@ -24,3 +28,5 @@ function isWinner() {
         alert("Winner!")
     }
 }
+
+
