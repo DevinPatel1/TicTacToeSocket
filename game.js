@@ -1,6 +1,6 @@
-var player
-var otherPlayer
-var isTurn
+var player = "X"
+var otherPlayer = "O"
+var isTurn = true
 
 function setPlayerSymbols() {
 
