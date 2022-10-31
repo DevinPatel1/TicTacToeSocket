@@ -39,3 +39,31 @@ function isWinner() {
         alert("Winner!")
     }
 }
+
+function isLoser() {
+    if (document.getElementById("00").innerHTML.trim() === otherPlayer && document.getElementById("01").innerHTML.trim() === otherPlayer && document.getElementById("02").innerHTML.trim() === otherPlayer) {
+        isTurn = false
+        alert("Loser!")
+    } else if (document.getElementById("10").innerHTML.trim() === otherPlayer && document.getElementById("11").innerHTML.trim() === otherPlayer && document.getElementById("12").innerHTML.trim() === otherPlayer) {
+        isTurn = false
+        alert("Loser!")
+    } else if (document.getElementById("20").innerHTML.trim() === otherPlayer && document.getElementById("21").innerHTML.trim() === otherPlayer && document.getElementById("22").innerHTML.trim() === otherPlayer) {
+        isTurn = false
+        alert("Loser!")
+    } else if (document.getElementById("00").innerHTML.trim() === otherPlayer && document.getElementById("10").innerHTML.trim() === otherPlayer && document.getElementById("20").innerHTML.trim() === otherPlayer) {
+        isTurn = false
+        alert("Loser!")
+    } else if (document.getElementById("01").innerHTML.trim() === otherPlayer && document.getElementById("11").innerHTML.trim() === otherPlayer && document.getElementById("21").innerHTML.trim() === otherPlayer) {
+        isTurn = false
+        alert("Loser!")
+    } else if (document.getElementById("02").innerHTML.trim() === otherPlayer && document.getElementById("12").innerHTML.trim() === otherPlayer && document.getElementById("22").innerHTML.trim() === otherPlayer) {
+        isTurn = false
+        alert("Loser!")
+    } else if (document.getElementById("00").innerHTML.trim() === otherPlayer && document.getElementById("11").innerHTML.trim() === otherPlayer && document.getElementById("22").innerHTML.trim() === otherPlayer) {
+        isTurn = false
+        alert("Loser!")
+    } else if (document.getElementById("02").innerHTML.trim() === otherPlayer && document.getElementById("11").innerHTML.trim() === otherPlayer && document.getElementById("20").innerHTML.trim() === otherPlayer) {
+        isTurn = false
+        alert("Loser!")
+    }
+}
