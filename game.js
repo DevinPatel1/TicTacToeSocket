@@ -6,10 +6,23 @@ function setPlayerSymbols() {
 
 }
 
+function setPlayerSymbols() {
+
+}
+
 function placeInSpace(space) {
     if (isTurn) {
         document.getElementById(space).innerHTML = player;
+        isTurn = false;
     }
+}
+
+function placeInSpaceOther() {
+    if (!isTurn) {
+        document.getElementById(space).innerHTML = otherPlayer;
+        isWinner()
+    }
+    isTurn = true
 }
 
 function isWinner() {
