@@ -1,10 +1,11 @@
-
 import net from "net"
 import readline from "readline"
-import game from "game.js"
+
+let HOST = "127.0.0.1"
+let PORT = 58901
 
 const client = new net.Socket()
-client.connect(59898, process.argv[2] && "localhost", () => {
+client.connect(PORT, HOST, () => {
   console.log("Connected to server")
 })
 client.on("data", (data) => {

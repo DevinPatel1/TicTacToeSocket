@@ -1,29 +1,22 @@
-// A server for Tic-tac toe games.
-//
-// The first two client connections become X and O for the first game; the next
-// two connections face off in the second game, and so on. Games run concurrently.
-//
-// The games use TTTP, the "Tic Tac Toe Protocol" which I just made up:
-//
-// Client -> Server
-//     MOVE <n>
-//     QUIT
-//
-// Server -> Client
-//     WELCOME <char>
-//     VALID_MOVE
-//     OTHER_PLAYER_MOVED <n>
-//     OTHER_PLAYER_LEFT
-//     VICTORY
-//     DEFEAT
-//     TIE
-//     MESSAGE <text>
+/*
+* Project:        Tic Tac Toe Socket Project
+* Course:         CS 370 - 01
+* Term:           FA 22
+* Team #:         2
+* Team Members:   Devin Patel
+*                 Jainum Patel
+*                 Faith Grimmeisen
+*
+* Purpose: To reinforce the concepts covered throughout
+* the course by creating a client-server socket application.
+* 
+*/
 
 import net from "net"
-//import game from "game.js"
 
 let game = null
 let PORT = 58901
+let HOST = "127.0.0.1"
 
 net
   .createServer((socket) => {
@@ -37,8 +30,9 @@ net
     }
   })
   .listen(PORT, () => {
-    console.log("Tic Tac Toe Server is Running")
+    console.log(`Tic Tac Toe Server is running on HOST=${HOST} PORT=${PORT}`)
   })
+
 
 class Game {
   // A board has nine squares. Each square is either unowned or it is owned by a
@@ -46,7 +40,7 @@ class Game {
   // square is unowned, otherwise the array cell stores a reference to the player that
   // owns it.
   constructor() {
-    this.board = Array(9).fill(null)
+    this.board = Array(9).fill(new EmptyPlayer(" "))
   }
 
   hasWinner() {
@@ -61,23 +55,30 @@ class Game {
       [0, 4, 8],
       [2, 4, 6],
     ]
-    return wins.some(([x, y, z]) => b[x] !== null && b[x] === b[y] && b[y] === b[z])
+    return wins.some(([x, y, z]) => b[x].constructor.name !== "EmptyPlayer" && b[y].constructor.name !== "EmptyPlayer" && b[z].constructor.name !== "EmptyPlayer" &&  b[x].mark === b[y].mark && b[y].mark === b[z].mark)
   }
 
   boardFilledUp() {
-    return this.board.every((square) => square !== null)
+    return this.board.every((square) => square.constructor.name !== "EmptyPlayer")
   }
 
   move(location, player) {
     if (player !== this.currentPlayer) {
       throw new Error("Not your turn")
     } else if (!player.opponent) {
-      throw new Error("You don’t have an opponent yet")
-    } else if (this.board[location] !== null) {
+      throw new Error("You do not have an opponent yet")
+    } else if (this.board[location].constructor.name !== "EmptyPlayer") {
       throw new Error("Cell already occupied")
     }
     this.board[location] = this.currentPlayer
     this.currentPlayer = this.currentPlayer.opponent
+  }
+
+  toString() {
+    let str = `\t${this.board[0].mark} | ${this.board[1].mark} | ${this.board[2].mark}\n
+    \t${this.board[3].mark} | ${this.board[4].mark} | ${this.board[5].mark}\n
+    \t${this.board[6].mark} | ${this.board[7].mark} | ${this.board[8].mark}`
+    return str
   }
 }
 
@@ -104,6 +105,8 @@ class Player {
           game.move(location, this)
           this.send("VALID_MOVE")
           this.opponent.send(`OPPONENT_MOVED ${location}`)
+          this.send(game.toString())
+          this.opponent.send(game.toString())
           if (this.game.hasWinner()) {
             this.send("VICTORY")
             this.opponent.send("DEFEAT")
@@ -125,5 +128,12 @@ class Player {
 
   send(message) {
     this.socket.write(`${message}\n`)
+  }
+}
+
+
+class EmptyPlayer {
+  constructor(mark) {
+    Object.assign(this, { mark })
   }
 }
