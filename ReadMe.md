@@ -38,4 +38,10 @@ QUIT
 
 
 ## Package Dependencies
-<pre>npm install net</pre>
+<p>This project uses NodeJs. To install NodeJs, use the following Debian/Ubuntu lines below. To install the net module, use the npm line below.</p>
+<pre>
+sudo apt install nodejs
+sudo apt install npm
+
+npm install net
+</pre>
