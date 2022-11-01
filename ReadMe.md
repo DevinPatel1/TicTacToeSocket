@@ -35,3 +35,7 @@ MOVE &lt;cell&gt;
 QUIT
 &ensp;&ensp;&ensp;&ensp;&ensp;Disconnects client
 </pre></p>
+
+
+## Package Dependencies
+<pre>npm install net</pre>
